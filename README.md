@@ -29,6 +29,7 @@ ever leaves your phone.
   - Rule-of-thirds **grid** to frame your shot.
   - Adjustable font size and text mirroring.
   - Screen stays awake while reading; videos save straight to **Photos**.
+- **Whole-screen recording** *(optional, requires one extra setup step)* — record your **entire phone screen + microphone** from inside the app and auto-save to Photos. No face camera in this mode (iOS doesn't allow the camera during a system screen broadcast). See **[SETUP-SCREEN-RECORDING.md](SETUP-SCREEN-RECORDING.md)**.
 
 ---
 
@@ -110,8 +111,13 @@ Teleprompter/
 ├── VoiceScrollManager.swift  // on-device speech recognition → scroll progress
 ├── DualCameraManager.swift   // multi-cam capture + PiP compositing (AVAssetWriter)
 ├── DualCameraScreen.swift    // PiP mode UI + dual preview
+├── ScreenRecordView.swift    // whole-screen recording UI (broadcast picker + save to Photos)
 ├── PiPShape.swift            // PiP window shape enum
 └── Assets.xcassets           // app icon / accent color
+
+BroadcastExtension/
+└── SampleHandler.swift       // ReplayKit broadcast upload extension (whole-screen + mic)
+                              //   → add as an Xcode target, see SETUP-SCREEN-RECORDING.md
 ```
 
 **Tech:** SwiftUI · AVFoundation (capture, `AVCaptureMultiCamSession`, `AVAssetWriter`) · Speech framework (on-device) · Core Image (PiP compositing). Deployment target iOS 18.

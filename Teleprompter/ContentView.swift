@@ -23,6 +23,7 @@ struct ContentView: View {
     @State private var controlsHidden = false
     @State private var showPiP = false
     @State private var showSettings = false
+    @State private var showScreenRecorder = false
 
     @AppStorage("promptFraction") private var savedPromptFraction: Double = 0.55
     @State private var promptFraction: Double = 0.55
@@ -124,6 +125,7 @@ struct ContentView: View {
             if presented { camera.stop() }   // uvolni kameru pro dual-cam režim
         }
         .sheet(isPresented: $showSettings) { settingsSheet }
+        .sheet(isPresented: $showScreenRecorder) { ScreenRecordView() }
         .alert("Error", isPresented: Binding(
             get: { camera.lastError != nil },
             set: { if !$0 { camera.lastError = nil } }
@@ -148,6 +150,14 @@ struct ContentView: View {
             }
             Spacer()
             if !camera.isRecording {
+                Button { showScreenRecorder = true } label: {
+                    Image(systemName: "rectangle.dashed.badge.record")
+                        .font(.subheadline.weight(.semibold))
+                        .frame(width: 38, height: 38)
+                        .background(.ultraThinMaterial, in: Circle())
+                }
+                .foregroundStyle(.white)
+
                 Button { showSettings = true } label: {
                     Image(systemName: "gearshape.fill")
                         .font(.subheadline.weight(.semibold))
